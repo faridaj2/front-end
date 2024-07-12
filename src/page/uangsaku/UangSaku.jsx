@@ -28,7 +28,7 @@ function UangSaku() {
         setSelected(month[0].value)
     }, [month])
     useEffect(() => {
-        if (selected.length > 0) return
+        if (!selected) return
         getRiwayat()
     }, [selected])
 
