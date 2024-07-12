@@ -1,0 +1,8 @@
+# Aktifkan mod_rewrite
+RewriteEngine On
+RewriteBase /
+
+# Atur agar server mengarahkan seluruh permintaan ke index.html untuk aplikasi React
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.html [L]
