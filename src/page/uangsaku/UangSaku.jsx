@@ -59,7 +59,7 @@ function UangSaku() {
                     <span>Riwayat</span>
                     <div className="w-1/2">
                         <Select color="primary" size="sm" variant="bordered" label="Pilih bulan" selectedKeys={[selected]} onChange={(e) => setSelected(e.target.value)}>
-                            {month?.map(item => (
+                            {month && month?.map(item => (
                                 <SelectItem key={item.value} value={item.value}>{item.month_year}</SelectItem>
                             ))}
                         </Select>
