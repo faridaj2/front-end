@@ -22,13 +22,13 @@ function UangSaku() {
     }, [])
     const [first, setFirst] = useState(false)
     useEffect(() => {
-        if (!month) return
+        if (!month || month.length === 0) return
         if (first) return
         setFirst(true)
         setSelected(month[0].value)
     }, [month])
     useEffect(() => {
-        if (!selected) return
+        if (selected.length > 0) return
         getRiwayat()
     }, [selected])
 
