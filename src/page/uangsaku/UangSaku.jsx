@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Select, SelectItem } from "@nextui-org/react"
+import { Chip, Select, SelectItem } from "@nextui-org/react"
 import DashboardTemplate from "../../components/DashboardTemplate"
 import AuthUser from "../../utils/AuthUser"
 import Utils from "../../utils/Utilis"
@@ -52,33 +52,33 @@ function UangSaku() {
         <DashboardTemplate>
             <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white'>Uang Saku</div>
             <div className="h-full">
-                <div className="text-center my-10 text-4xl">
-                    <div className="font-semibold font-mono">Rp. {money ? addComa(money) : 0}</div>
+                <div className="text-center my-10 text-4xl flex justify-center">
+                    <div className="font-black font-mono bg-primary text-white p-5 rounded-xl shadow-xl shadow-violet-700/20 border-2 border-white">Rp. {money ? addComa(money) : 0}</div>
                 </div>
-                <div className="bg-white flex justify-between items-center p-4">
+                <div className="bg-white flex justify-between items-center p-4 mx-4 rounded-xl border-1 shadow-md shadow-violet-300">
                     <span>Riwayat</span>
                     <div className="w-1/2">
-                        <Select color="primary" size="sm" variant="bordered" label="Pilih bulan" selectedKeys={[selected]} onChange={(e) => setSelected(e.target.value)}>
+                        <Select color="primary" size="sm" variant="flat" radius="lg" label="Pilih bulan" selectedKeys={[selected]} onChange={(e) => setSelected(e.target.value)}>
                             {month && month?.map(item => (
                                 <SelectItem key={item.value} value={item.value}>{item.month_year}</SelectItem>
                             ))}
                         </Select>
                     </div>
                 </div>
-                <div className="flex flex-col mt-2 gap-2">
+                <div className="flex flex-col mt-2 gap-2 px-2">
                     <AnimatePresence>
                         {riwayat?.map(item => (
                             <motion.div
-                                key={item.id} className="bg-white p-2 border-1 mx-2 shadow-md shadow-violet-300 rounded-md items-center px-2 group"
+                                key={item.id} className="bg-white p-2 border-1 mx-2 shadow-md shadow-violet-300 rounded-xl items-center px-2 group"
                                 initial={{ y: 10, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 exit={{ y: -50, opacity: 0 }}
                             >
-                                <div className="flex justify-between transition-all">
+                                <div className="flex justify-between transition-all items-center">
                                     <div className="text-tiny">{item.date}</div>
-                                    <div>Rp. {addComa(item.uang)}</div>
+                                    <Chip color="primary" variant="shadow">Rp. {addComa(item.uang)}</Chip>
                                 </div>
-                                <div className="h- group-hover:h-['auto'] overflow-hidden transition-all ease-in-out">
+                                <div className="h- group-hover:h-['auto'] overflow-hidden transition-all ease-in-out border-1 p-2 rounded-md mt-2">
                                     {item.keterangan}
                                 </div>
                             </motion.div>

@@ -8,6 +8,8 @@ import Informasi from './page/dashboard/Informasi';
 import Tagihan from './page/dashboard/Tagihan';
 import DetailTagihan from './page/dashboard/DetailTagihan';
 import UangSaku from './page/uangsaku/UangSaku';
+import Poin from './page/keamanan/Poin';
+import Riwayat from './page/keamanan/Riwayat';
 
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route exact path='/tagihan' element={<Tagihan />} />
           <Route exact path='/tagihan/:id' element={<DetailTagihan />} />
           <Route exact path='/uang-saku' element={<UangSaku />} />
+          <Route exact path='/poin' element={<Poin />} />
+          <Route exact path='/riwayat' element={<Riwayat />} />
         </Routes>
       </Router>
     </NextUIProvider>
