@@ -1,28 +1,4 @@
-# Setelah membuat file ini, pastikan untuk meletakkannya di dalam folder root sebelum folder 'dist' dari aplikasi React Anda.
-
-# Atur modul rewrite
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-  RewriteRule ^dist/index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ dist/index.html [L]
-</IfModule>
-
-# Atur tipe MIME untuk file JavaScript
-AddType text/javascript .js
-AddType application/javascript .js
-
-# Atur header untuk kompresi
-<IfModule mod_deflate.c>
-  <IfModule mod_filter.c>
-    AddOutputFilterByType DEFLATE application/javascript
-    AddOutputFilterByType DEFLATE application/json
-    AddOutputFilterByType DEFLATE application/xml
-    AddOutputFilterByType DEFLATE text/css
-    AddOutputFilterByType DEFLATE text/html
-    AddOutputFilterByType DEFLATE text/javascript
-    AddOutputFilterByType DEFLATE text/plain
-  </IfModule>
+    RewriteEngine On
+    RewriteRule ^(.*)$ /public/$1 [L]
 </IfModule>
