@@ -41,7 +41,7 @@ function Menu() {
     }, []);
 
     return (
-        <div className='absolute w-full bottom-0'>
+        <div className='fixed w-full bottom-0 left-0'>
             <motion.div
                 className='p-1'
                 ref={wrap}

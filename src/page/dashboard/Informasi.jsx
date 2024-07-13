@@ -22,9 +22,9 @@ function Informasi() {
   }
   return (
     <DashboardTemplate>
-      <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white'>Informasi Siswa</div>
-      <Scroll >
-        <div className='p-2 bg-white shadow rounded-2xl m-2 border-1'>
+      <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Informasi Siswa</div>
+      <Scroll>
+        <div className='p-2 bg-white shadow shadow-violet-500/30 rounded-2xl m-2 border-1'>
           <div className='flex items-center'>
             {data?.foto
               ? <Image width={1000} className='w-full' src={import.meta.env.VITE_API_BASE_URL + '/storage/photos/' + data?.foto} /> : <Image width={500} src='https://i.pinimg.com/564x/ad/73/1c/ad731cd0da0641bb16090f25778ef0fd.jpg' />}

@@ -50,8 +50,8 @@ function UangSaku() {
     }
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white'>Uang Saku</div>
-            <div className="h-full">
+            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Uang Saku</div>
+            <div className="h-full mt-14">
                 <div className="text-center my-10 text-4xl flex justify-center">
                     <div className="font-black font-mono bg-primary text-white p-5 rounded-xl shadow-xl shadow-violet-700/20 border-2 border-white">Rp. {money ? addComa(money) : 0}</div>
                 </div>

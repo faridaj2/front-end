@@ -37,8 +37,8 @@ function Poin() {
 
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white'>Poin Pelanggaran</div>
-            <div className='flex justify-center my-5'>
+            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Poin Pelanggaran</div>
+            <div className='flex justify-center my-5 mt-16'>
                 <Badge content="Poin" color='primary'>
                     <div className='text-5xl font-black text-white rounded-lg bg-primary p-3'>{poin ? poin : 0}</div>
                 </Badge>

@@ -1,21 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 function Scroll({ children }) {
-    const divRef = useRef();
 
-    const handleClickRef = () => {
-        divRef.current.click();
-    };
-    useEffect(() => {
-        handleClickRef()
-    }, [])
 
     return (
-        <div className='h-screen overflow-y-auto scroll mx-3' ref={divRef}>
+        <div className='h-screen overflow-y-auto scroll mx-3 mt-14' >
             {children}
-            <div className='h-24'>
-                <button onClick={handleClickRef} style={{ display: 'none' }}>Klik Ref</button>
-            </div>
         </div>
     );
 }

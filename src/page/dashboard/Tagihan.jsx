@@ -38,7 +38,7 @@ function Tagihan() {
     }
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white'>Tagihan</div>
+            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Tagihan</div>
             <Scroll>
                 <div className='font-bold text-violet-800'>
                     Tagihan Aktif

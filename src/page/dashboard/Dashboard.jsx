@@ -3,19 +3,14 @@ import React from 'react'
 // Component
 import DashboardTemplate from '../../components/DashboardTemplate'
 import Scroll from '../../components/Scroll'
-import { Image } from '@nextui-org/react';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-
-import { Autoplay } from 'swiper/modules';
-
 // Icon
 
 function Dashboard() {
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white'>Dashboard</div>
+            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Dashboard</div>
             <Scroll>
                 {/* <div className='rounded-md overflow-hidden mt-2'>
                     <Swiper
