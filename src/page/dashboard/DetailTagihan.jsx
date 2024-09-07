@@ -7,6 +7,8 @@ import DashboardTemplate from '../../components/DashboardTemplate'
 import Scroll from '../../components/Scroll'
 import { Chip, Divider, Spinner } from '@nextui-org/react'
 
+import Title from '../../components/Title'
+
 // Utilitas
 import AuthUser from '../../utils/AuthUser'
 function DetailTagihan() {
@@ -140,14 +142,19 @@ function DetailTagihan() {
 
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Detail</div>
+            <div className='w-full flex justify-center items-center py-2 bg-white fixed z-50 pb-5'>
+                <Title>
+                    Detail Tagihan
+                </Title>
+            </div>
+
             <Scroll>
-                <div className='flex justify-between px-2'>
-                    <div className='text-violet-900 max-w-40'>
+                <div className='flex justify-between px-2 pt-16'>
+                    <div className='text-green-700 max-w-40'>
                         <div>Detail</div>
                         <div className='font-semibold truncate'>{data && data.name}</div>
                     </div>
-                    <div className='text-violet-900 text-right'>
+                    <div className='text-green-700 text-right'>
                         <div>Jenis</div>
                         <div className='font-semibold'>{data && data.type === 'Bulanan' ? 'Bulanan' : 'Kontan'}</div>
                     </div>
@@ -160,7 +167,7 @@ function DetailTagihan() {
                             <div className='bg-white shadow-md p-4 rounded-3xl border-1'>
                                 <div className='flex justify-between items-center'>
                                     <Chip color='primary' variant='shadow'>{item.month}</Chip>
-                                    <Chip color='primary' variant='shadow' className='text-tiny'>{getStatus(item.month, item.price)}</Chip>
+                                    <Chip color={`${getStatus(item.month, item.price) == 'Lunas' ? 'primary' : 'danger'}`} variant='shadow' className='text-tiny'>{getStatus(item.month, item.price)}</Chip>
 
                                 </div>
                                 <Divider className='my-2' />

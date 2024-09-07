@@ -27,12 +27,11 @@ function Riwayat() {
 
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Riwayat Pelanggaran</div>
             <div className="mt-16">
-                <div className='bg-white rounded-xl border-1 shadow-xl shadow-violet-500/20 py-3 px-4 mx-3 mt-2'>
+                <div className='bg-white rounded-xl border-1 shadow-xl shadow-green-500/20 py-3 px-4 mx-3 mt-2'>
                     <div className='flex justify-between'>
-                        <div className='font-bold'>Riwayat Pelanggaran</div>
-                        <div className='text-primary cursor-pointer' onClick={() => navigate('/poin')}>Kembali</div>
+                        <div className='font-bold text-green-700'>Riwayat Pelanggaran</div>
+                        <div className='cursor-pointer text-sm text-green-500' onClick={() => navigate('/poin')}>Kembali</div>
                     </div>
                     <div className='mt-2 flex flex-col gap-2'>
                         {data ? data.data?.map(item => (

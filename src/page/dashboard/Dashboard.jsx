@@ -7,43 +7,73 @@ import Scroll from '../../components/Scroll'
 import 'swiper/css';
 // Icon
 
+// Navigate
+import { useNavigate } from 'react-router-dom';
+
+
 function Dashboard() {
+    const navigate = useNavigate()
+
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Dashboard</div>
             <Scroll>
-                {/* <div className='rounded-md overflow-hidden mt-2'>
-                    <Swiper
-                        loop={true}
-                        slidesPerView={1}
-                        centeredSlides={true}
-                        autoplay={{
-                            delay: 5000, // Delay in milliseconds (5 seconds)
-                            disableOnInteraction: false, // Autoplay continues even when user interacts with Swiper
-                        }}
-                        modules={[Autoplay]}
-                    >
-                        {Array.from({ length: 10 }, (_, i) => (
-                            <SwiperSlide key={i}><Image src={`https://picsum.photos/500/200?random=${i}`} alt="" /></SwiperSlide>
-                        ))}
-                    </Swiper>
-                </div> */}
-                <div className='bg-white rounded-xl border-1 p-2 mt-2 shadow-md shadow-violet-700/20'>
-                    <div className='text-gray-700 text-medium font-semibold mb-2'>
-                        Informasi Narahubung
+                <div className='w-full h-56 absolute left-0 -z-10'>
+                    <img src="/icon/apps/addons/corner.png" width={150} className='absolute right-0' alt="" />
+                    <img src="/icon/apps/addons/corner.png" width={150} className='absolute left-0 transform scale-x-[-1]' alt="" />
+                    <img src='/icon/Logo.png' width={200} className='pt-20 mx-auto' />
+                    <div className='text-center text-xs mt-2 font-bold text-green-700'>PP. DARUSSALAM BLOKAGUNG 2</div>
+                </div>
+                <div className='px-5 pt-40 z-50'>
+                    <div className='mt-2 flex justify-between '>
+                        <div className='flex flex-col items-center cursor-pointer' onClick={() => navigate('/tagihan')}>
+                            <img src='/icon/apps/menu/invoice.png' width={40} className='mb-2' />
+                            <h2 className='text-xs font-semibold text-green-800'>Tagihan</h2>
+                        </div>
+                        <div className='flex flex-col items-center cursor-pointer' onClick={() => navigate('/uang-saku')}>
+                            <img src='/icon/apps/menu/money.png' width={40} className='mb-2' />
+                            <h2 className='text-xs font-semibold text-green-800'>Uang Saku</h2>
+                        </div>
+                        <div className='flex flex-col items-center cursor-pointer' onClick={() => navigate('/poin')}    >
+                            <img src='/icon/apps/menu/insurance.png' width={40} className='mb-2' />
+                            <h2 className='text-xs font-semibold text-green-800'>Keamanan</h2>
+                        </div>
                     </div>
-                    <div>
-                        <div className='flex justify-between items-center mb-1'>
-                            <div className='text-tiny'>Pondok</div>
-                            <div className='text-blue-700 cursor-pointer text-sm'><a href="https://wa.me/628127604401" target='_blank'>0812 7604 401</a></div>
+                    <div className='mt-4 flex flex-col gap-2'>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100'>
+                            <div>
+                                <img src="/icon/apps/addons/phone.png" width={20} alt="" />
+                            </div>
+                            <div className='flex flex-col'>
+                                <h3 className='font-semibold text-green-700 text-sm'>Pondok Pesantren</h3>
+                                <p className='text-xs text-green-700'>0812 7604 041</p>
+                            </div>
                         </div>
-                        <div className='flex justify-between items-center mb-1'>
-                            <div className='text-tiny'>Bendahara</div>
-                            <div className='text-blue-700 cursor-pointer text-sm'><a href="https://wa.me/6281249991951" target='_blank'>0812 4999 1951</a></div>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100'>
+                            <div>
+                                <img src="/icon/apps/addons/phone.png" width={20} alt="" />
+                            </div>
+                            <div className='flex flex-col'>
+                                <h3 className='font-semibold text-green-700 text-sm'>Biro Keuangan</h3>
+                                <p className='text-xs text-green-700'>0812 4999 1951</p>
+                            </div>
                         </div>
-                        <div className='flex justify-between items-center mb-1'>
-                            <div className='text-tiny'>Sekretaris</div>
-                            <div className='text-blue-700 cursor-pointer text-sm'><a href="https://wa.me/6281946728375" target='_blank'>0819 4672 8375</a></div>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100'>
+                            <div>
+                                <img src="/icon/apps/addons/phone.png" width={20} alt="" />
+                            </div>
+                            <div className='flex flex-col'>
+                                <h3 className='font-semibold text-green-700 text-sm'>Keamanan</h3>
+                                <p className='text-xs text-green-700'>0878 5749 3262</p>
+                            </div>
+                        </div>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100'>
+                            <div>
+                                <img src="/icon/apps/addons/phone.png" width={20} alt="" />
+                            </div>
+                            <div className='flex flex-col'>
+                                <h3 className='font-semibold text-green-700 text-sm'>Sekretaris</h3>
+                                <p className='text-xs text-green-700'>0819 4672 8375</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -10,10 +10,14 @@ export default {
   ],
   theme: {
     fontFamily: {
-      'sans': ['Lato', 'sans-serif']
+      'sans': ['Montserrat', 'sans-serif']
     },
     extend: {
-
+      colors: {
+        'primary': '#22c55e',
+        'secondary': '#1C1C1C',
+        'tertiary': '#2B2B2B',
+      }
 
     },
   },

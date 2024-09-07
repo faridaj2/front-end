@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom'
 import Scroll from '../../components/Scroll'
 import DashboardTemplate from '../../components/DashboardTemplate'
 import { easeInOut, motion } from 'framer-motion'
+import Title from '../../components/Title'
 
 // Icon
-import { FcMoneyTransfer } from "react-icons/fc"
-import { FcPrevious } from "react-icons/fc"
+// import { FcMoneyTransfer } from "react-icons/fc"
+// import { FcPrevious } from "react-icons/fc"
+import BillIcon from '../../icon/menu/BillIcon'
 
 // Utilitas
 import AuthUser from '../../utils/AuthUser'
@@ -38,20 +40,23 @@ function Tagihan() {
     }
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Tagihan</div>
             <Scroll>
-                <div className='font-bold text-violet-800'>
+                {/* <div className='font-bold text-violet-800'>
                     Tagihan Aktif
-                </div>
+                </div> */}
+                <Title>
+                    Tagihan Aktif
+                </Title>
+
                 <div className='mt-4'>
                     {tagihan ?
                         tagihan.map(data => (
-                            <div className='group rounded-3xl bg-white p-3 border-1 flex gap-4 items-center cursor-pointer transition-all mb-2' key={data.id} onClick={() => navigate(`/tagihan/${data.id}`)}>
-                                <div className='text-2xl border-1 p-2 rounded-2xl shadow-md shadow-violet-700/30 group-hover:-translate-y-2 group-hover:shadow-lg transition-all'>
-                                    <FcMoneyTransfer />
+                            <div className='group rounded bg-gradient-to-b shadow from-green-100 p-3 border-1 flex gap-4 items-center cursor-pointer transition-all mb-2' key={data.id} onClick={() => navigate(`/tagihan/${data.id}`)}>
+                                <div className='text-2xl border-1 p-2 rounded shadow shadow-green-700/10 group-hover:-translate-y-2 group-hover:shadow-lg transition-all'>
+                                    <BillIcon />
                                 </div>
                                 <div className='group-hover:scale-105 transition-all group-hover:-translate-y-2'>
-                                    <div className='text-gray-700 truncate max-w-64'>{data.payment_name}</div>
+                                    <div className='text-green-700 font-semibold truncate max-w-64'>{data.payment_name}</div>
                                     <div className='text-tiny text-gray-500 truncate max-w-64'>Berlaku - {data.bulanan ? 'Bulanan' : 'Kontan'}</div>
                                 </div>
                             </div>
@@ -61,17 +66,16 @@ function Tagihan() {
                             <Spinner />
                         </div>
                     }
+                    {tagihan && tagihan.length === 0 && <div className='w-full text-tiny text-center'>Tidak tagihan</div>}
                     <div className='font-bold my-5 text-violet-800 flex justify-between items-center cursor-pointer' onClick={() => setOpen(!open)}>
-                        <div>
-                            Riwayat Tagihan
-                        </div>
-                        <motion.div
+                        <Title>Riwayat Tagihan</Title>
+                        {/* <motion.div
                             initial={{ rotate: 0 }}
                             animate={{ rotate: open ? 180 : 0 }}
                             transition={{ duration: 0.2, ease: easeInOut }}
                         >
                             <FcPrevious className='rotate-90' />
-                        </motion.div>
+                        </motion.div> */}
                     </div>
                     <motion.div
                         initial={open ? { height: 'auto' } : { height: 0 }}
@@ -82,12 +86,12 @@ function Tagihan() {
                         {
                             done &&
                             done.map(data => (
-                                <div className='group rounded-3xl bg-white p-3 border-1 flex gap-4 items-center cursor-pointer transition-all mb-2' key={data.id} onClick={() => navigate(`/tagihan/${data.id}`)}>
-                                    <div className='text-2xl border-1 p-2 rounded-2xl shadow-md shadow-violet-700/30 group-hover:-translate-y-2 group-hover:shadow-lg transition-all'>
-                                        <FcMoneyTransfer />
+                                <div className='group rounded bg-gradient-to-b from-green-100 p-3 border-1 flex gap-4 items-center cursor-pointer transition-all mb-2' key={data.id} onClick={() => navigate(`/tagihan/${data.id}`)}>
+                                    <div className='text-2xl border-1 p-2 rounded bg-white shadow shadow-green-700/10 group-hover:-translate-y-2 group-hover:shadow-lg transition-all'>
+                                        <BillIcon />
                                     </div>
                                     <div className='group-hover:scale-105 transition-all group-hover:-translate-y-2'>
-                                        <div className='text-gray-700 truncate max-w-64'>{data.payment_name}</div>
+                                        <div className='text-green-700 font-semibold truncate max-w-64'>{data.payment_name}</div>
                                         <div className='text-tiny text-gray-500 truncate max-w-64'>Lunas - {data.bulanan ? 'Bulanan' : 'Kontan'}</div>
                                     </div>
                                 </div>

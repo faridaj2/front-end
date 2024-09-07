@@ -1,15 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 // Icon
-import { HiLogout } from "react-icons/hi"
 import { useNavigate } from 'react-router-dom'
-import { FaMoneyBillTransfer } from "react-icons/fa6"
-import { GiPoliceBadge } from "react-icons/gi"
-
-import { FcBusinessman, FcHome, FcMenu } from "react-icons/fc"
-import { HiOutlineBanknotes } from "react-icons/hi2"
-// Component
-
+import HomeIcon from "../icon/menu/HomeIcon"
+import ProfileIcon from "../icon/menu/ProfileIcon"
+// import MenuIcon from "../icon/menu/MenuIcon"
+import LogoutIcon from '../icon/menu/LogoutIcon'
 // Utils
 import AuthUser from '../utils/AuthUser'
 
@@ -41,59 +37,44 @@ function Menu() {
     }, []);
 
     return (
-        <div className='fixed w-full bottom-0 left-0'>
+        <div className='fixed w-full bottom-0 left-0 z-[5000]'>
             <motion.div
-                className='p-1'
+                className='p-1 bg-white'
                 ref={wrap}
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: menu ? -100 : 100, opacity: menu ? 1 : 0, scale: menu ? 1 : 0.1 }}
             >
-                <div>
-                    <div className='grid grid-cols-3 gap-3 py-4 px-5 border bg-white rounded-3xl shadow-md shadow-violet-300'>
-                        <div className='text-center flex flex-col justify-center items-center gap-2 cursor-pointer group' onClick={() => navigate('/tagihan')}>
-                            <div className='group-hover:translate-y-1 group-hover:text-violet-300 transition-all border rounded-full h-14 w-14 flex items-center justify-center text-2xl text-violet-500 shadow-md shadow-violet-700/30 group-hover:shadow-violet-700/10 bg-white'>
-                                <FaMoneyBillTransfer />
-                            </div>
-                            <span className='text-tiny text-violet-700 group-hover:text-violet-300 transition-all'>Tagihan</span>
-                        </div>
-                        <div className='text-center flex flex-col justify-center items-center gap-2 cursor-pointer group' onClick={() => navigate('/uang-saku')}>
-                            <div className='group-hover:translate-y-1 group-hover:text-violet-300 transition-all border rounded-full h-14 w-14 flex items-center justify-center text-2xl text-violet-500 shadow-md shadow-violet-700/30 group-hover:shadow-violet-700/10 bg-white'>
-                                <HiOutlineBanknotes />
-                            </div>
-                            <span className='text-tiny text-violet-700 group-hover:text-violet-300 transition-all'>Uang Saku</span>
-                        </div>
-                        <div className='text-center flex flex-col justify-center items-center gap-2 cursor-pointer group' onClick={() => navigate('/poin')}>
-                            <div className='group-hover:translate-y-1 group-hover:text-violet-300 transition-all border rounded-full h-14 w-14 flex items-center justify-center text-2xl text-violet-500 shadow-md shadow-violet-700/30 group-hover:shadow-violet-700/10 bg-white'>
-                                <GiPoliceBadge />
-                            </div>
-                            <span className='text-tiny text-violet-700 group-hover:text-violet-300 transition-all'>Poin</span>
-                        </div>
-                        <div className='text-center flex flex-col justify-center items-center gap-2 cursor-pointer group' onClick={handleLogout}>
-                            <div className='group-hover:translate-y-1 group-hover:text-violet-300 transition-all border rounded-full h-14 w-14 flex items-center justify-center text-2xl text-violet-500 shadow-md shadow-violet-700/30 group-hover:shadow-violet-700/10 bg-white'>
-                                <HiLogout />
-                            </div>
-                            <span className='text-tiny text-violet-700 group-hover:text-violet-300 transition-all'>Keluar</span>
+                <div className='w-full max-w-80 mx-auto'>
+                    <div className='border-1 border-green-500 p-2 rounded shadow shadow-green-500/30'>
+                        <div className='text-center font-semibold text-green-600 py-5'>Apakah anda ingin keluar?</div>
+                        <div className='flex justify-between gap-1'>
+                            <button className='w-full p-3 border-1 border-green-200 text-sm text-green-700' onClick={() => setMenu(!menu)}>
+                                Batal
+                            </button>
+                            <button className='w-full p-3 border-1 border-green-200 text-sm bg-red-700 text-green-100' onClick={() => handleLogout()}>
+                                Keluar
+                            </button>
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </motion.div >
             <div className='w-full backdrop-blur-md border-t-1 pt-2'>
                 <div className="flex text-xl">
-                    <div className='grow flex flex-col items-center justify-center relative text-violet-700 cursor-pointer' onClick={() => navigate('/informasi')}>
-                        <FcBusinessman />
+                    <div className='grow flex flex-col items-center justify-center relative text-black cursor-pointer' onClick={() => navigate('/informasi')}>
+                        <ProfileIcon />
                         <span className='text-tiny mt-1'>Profile</span>
                     </div>
-                    <div className='grow flex flex-col items-center justify-center relative text-violet-700 cursor-pointer' onClick={() => navigate('/home')}>
-                        <FcHome />
+                    <div className='grow flex flex-col items-center justify-center relative text-black cursor-pointer' onClick={() => navigate('/home')}>
+                        <HomeIcon className="text-green-100" />
                         <span className='text-tiny mt-1'>Home</span>
                     </div>
-                    <div className='grow flex flex-col items-center justify-center relative text-violet-700 cursor-pointer' onClick={() => setMenu(!menu)} ref={button}>
-                        <FcMenu />
-                        <span className='text-tiny mt-1' >Menu</span>
+                    <div className='grow flex flex-col items-center justify-center relative text-black cursor-pointer' onClick={() => setMenu(!menu)} ref={button}>
+                        <LogoutIcon />
+                        <span className='text-tiny mt-1' >Logout</span>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

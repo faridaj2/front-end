@@ -30,6 +30,7 @@ function UangSaku() {
     useEffect(() => {
         if (!selected) return
         getRiwayat()
+        console.log(riwayat)
     }, [selected])
 
 
@@ -50,15 +51,19 @@ function UangSaku() {
     }
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center border-b-1 py-2 bg-white fixed z-50 pb-5'>Uang Saku</div>
+
             <div className="h-full mt-14">
                 <div className="text-center my-10 text-4xl flex justify-center">
-                    <div className="font-black font-mono bg-primary text-white p-5 rounded-xl shadow-xl shadow-violet-700/20 border-2 border-white">Rp. {money ? addComa(money) : 0}</div>
+                    <div className="mx-4 relative">
+                        <img src="/icon/apps/addons/title.png" alt="" />
+                        <div className='absolute left-[50%] w-52 text-center text-2xl top-[50%] translate-x-[-50%] translate-y-[-50%] text-green-200 font-semibold'>Rp. {money ? addComa(money) : 0}</div>
+                    </div>
+                    {/* <div className="font-black font-mono bg-green-700 text-white p-5 rounded-xl shadow-xl shadow-violet-700/20 border-2 border-white">Rp. {money ? addComa(money) : 0}</div> */}
                 </div>
-                <div className="bg-white flex justify-between items-center p-4 mx-4 rounded-xl border-1 shadow-md shadow-violet-300">
+                <div className="bg-white flex justify-between border-green-400 bg-gradient-to-b from-green-50 items-center p-4 mx-4 rounded-xl border-1 shadow-md">
                     <span>Riwayat</span>
                     <div className="w-1/2">
-                        <Select color="primary" size="sm" variant="flat" radius="lg" label="Pilih bulan" selectedKeys={[selected]} onChange={(e) => setSelected(e.target.value)}>
+                        <Select className="bg-white" size="sm" variant="flat" radius="lg" label="Pilih bulan" selectedKeys={[selected]} onChange={(e) => setSelected(e.target.value)}>
                             {month && month?.map(item => (
                                 <SelectItem key={item.value} value={item.value}>{item.month_year}</SelectItem>
                             ))}
@@ -69,16 +74,16 @@ function UangSaku() {
                     <AnimatePresence>
                         {riwayat?.map(item => (
                             <motion.div
-                                key={item.id} className="bg-white p-2 border-1 mx-2 shadow-md shadow-violet-300 rounded-xl items-center px-2 group"
+                                key={item.id} className="bg-white p-2 border-1 border-green-400 bg-gradient-to-b from-green-50 mx-2 shadow-md rounded-xl items-center px-2 group"
                                 initial={{ y: 10, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 exit={{ y: -50, opacity: 0 }}
                             >
                                 <div className="flex justify-between transition-all items-center">
                                     <div className="text-tiny">{item.date}</div>
-                                    <Chip color="primary" variant="shadow">Rp. {addComa(item.uang)}</Chip>
+                                    <Chip className={`${item.jenis == 'masuk' ? 'bg-green-500' : 'bg-red-500'} text-white`} size="sm" variant="shadow">Rp. {addComa(item.uang)}</Chip>
                                 </div>
-                                <div className="h- group-hover:h-['auto'] overflow-hidden transition-all ease-in-out border-1 p-2 rounded-md mt-2">
+                                <div className="h-group-hover:h-['auto'] overflow-hidden transition-all ease-in-out border-t-1 border-green-500 p-2 rounded-s mt-2 text-xs">
                                     {item.keterangan}
                                 </div>
                             </motion.div>
@@ -86,7 +91,7 @@ function UangSaku() {
                     </AnimatePresence>
                 </div>
             </div>
-        </DashboardTemplate>
+        </DashboardTemplate >
     )
 }
 

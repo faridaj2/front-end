@@ -57,15 +57,20 @@ function Home() {
     return (
         <Template>
             <Toaster />
-            <div className='flex items-center justify-center w-full h-screen'>
+            <div className='flex items-end justify-center w-full h-screen'>
+                <div className='absolute w-full h-full bg-black'>
+                    <img src="/image/login/santri.jpg" className='w-full h-full object-cover opacity-50' alt="" />
+                </div>
                 {/* Center */}
-                <div className='w-full max-w-sm'>
-                    <div className='flex justify-center flex-col items-center mb-2'>
+                <div className='w-full max-w-sm relative'>
+
+                    <div className='flex justify-center flex-col items-center mb-10'>
                         <Image src='/icon/android-chrome-512x512.png' width={100} />
-                        <h1 className='font-semibold mt-2'>PP. Darussalam Blokagung 2</h1>
+                        <h1 className='font-bold mt-2 text-4xl text-center text-white uppercase'>PP. Darussalam Blokagung 2</h1>
+                        {/* <p className='text-white'>Text</p> */}
                     </div>
                     <div className='px-10'>
-                        <div className='w-full max-w-sm object-fill object-center h-56 rounded-xl relative'>
+                        {/* <div className='w-full max-w-sm object-fill object-center h-56 rounded-xl relative'>
                             <motion.div
                                 className='absolute'
                                 animate={{ y: [140, 120, 140], x: [-10, -10, -10], transition: { duration: 2.5, repeat: Infinity } }}
@@ -80,13 +85,13 @@ function Home() {
                                 <Chip color='primary' variant='dot' className='backdrop-blur-md'>Cek Siswa</Chip>
                             </motion.div>
                             <img src="splash.png" alt="" className='w-full h-full' />
-                        </div>
+                        </div> */}
                     </div>
-                    <div className=''>
+                    <div className='bg-white pt-5 pb-20 mb-2 rounded-2xl mx-2'>
                         <form className='flex flex-col gap-2 px-5' onSubmit={submitHandler}>
-                            <Input type='number' variant='bordered' className='shadow-md shadow-violet-700/20 rounded-xl' placeholder='Masukkan NIS Santri' aria-label='Input' value={nis} onValueChange={setNis} />
+                            <Input type='number' variant='bordered' className='shadow-md shadow-green-700/20 rounded-xl' placeholder='Masukkan NIS Santri' aria-label='Input' value={nis} onValueChange={setNis} />
                             <I18nProvider locale="id-ID">
-                                <DatePicker variant='bordered' className='shadow-md shadow-violet-700/20 rounded-xl' aria-label='Date Picker' value={dob} onChange={setDob} showMonthAndYearPickers />
+                                <DatePicker variant='bordered' className='shadow-md shadow-green-700/20 rounded-xl' aria-label='Date Picker' value={dob} onChange={setDob} showMonthAndYearPickers />
                             </I18nProvider>
                             <Button color='primary' variant='shadow' type='submit'>Masuk</Button>
                         </form>

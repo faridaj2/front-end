@@ -4,7 +4,7 @@ function Scroll({ children }) {
 
 
     return (
-        <div className='h-screen overflow-y-auto scroll mx-3 mt-14' >
+        <div className='mx-3' >
             {children}
         </div>
     );
