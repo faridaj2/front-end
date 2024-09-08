@@ -9,13 +9,15 @@ import 'swiper/css';
 
 // Navigate
 import { useNavigate } from 'react-router-dom';
+// import { FcIntegratedWebcam } from 'react-icons/fc';
 
 
 function Dashboard() {
     const navigate = useNavigate()
 
     const open = (numb) => {
-        window.open(`https://wa.me/${numb}`, '_blank');
+        const number = parseInt(numb)
+        window.open(`https://wa.me/${number}`, '_blank');
     }
 
     return (
@@ -43,7 +45,7 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className='mt-4 flex flex-col gap-2'>
-                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('628127604041')}>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('628127604401')}>
                             <div>
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
@@ -52,7 +54,7 @@ function Dashboard() {
                                 <p className='text-xs text-green-700'>0812 7604 041</p>
                             </div>
                         </div>
-                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('628124991951')}>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('6281249991951')}>
                             <div>
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
@@ -61,7 +63,7 @@ function Dashboard() {
                                 <p className='text-xs text-green-700'>0812 4999 1951</p>
                             </div>
                         </div>
-                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('628785743262')}>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('62878574953262')}>
                             <div>
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
@@ -70,7 +72,7 @@ function Dashboard() {
                                 <p className='text-xs text-green-700'>0878 5749 3262</p>
                             </div>
                         </div>
-                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('628194678275')}>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('6281946728375')}>
                             <div>
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
