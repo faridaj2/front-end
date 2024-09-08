@@ -63,7 +63,7 @@ function Dashboard() {
                                 <p className='text-xs text-green-700'>0812 4999 1951</p>
                             </div>
                         </div>
-                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('62878574953262')}>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('6287857493262')}>
                             <div>
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
