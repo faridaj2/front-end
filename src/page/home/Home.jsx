@@ -2,8 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import Template from '../../components/Template'
 
-import { Button, Chip, DatePicker, Image, Input } from '@nextui-org/react'
-import { motion } from 'framer-motion'
+import { Button, DatePicker, Image, Input } from '@nextui-org/react'
 
 import Utils from '../../utils/Utilis'
 import AuthUser from '../../utils/AuthUser'
