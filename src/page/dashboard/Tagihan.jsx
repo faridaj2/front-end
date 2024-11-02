@@ -19,8 +19,8 @@ import { Spinner } from '@nextui-org/react'
 function Tagihan() {
     const navigate = useNavigate()
     const { http } = new AuthUser
-    const [tagihan, setTagihan] = useState()
-    const [done, setDone] = useState()
+    const [tagihan, setTagihan] = useState([])
+    const [done, setDone] = useState([])
 
     const [open, setOpen] = useState(false)
 
@@ -32,7 +32,7 @@ function Tagihan() {
         http.get('/api/user/get-user-tagihan')
             .then(res => {
                 const data = res.data.pembayaran
-                setTagihan(data)
+                setTagihan(Object.values(data))
                 const done = res.data.done
                 setDone(Object.values(done))
             })
@@ -66,7 +66,7 @@ function Tagihan() {
                             <Spinner />
                         </div>
                     }
-                    {tagihan && tagihan.length === 0 && <div className='w-full text-tiny text-center'>Tidak tagihan</div>}
+                    {tagihan && tagihan.length === 0 && <div className='w-full text-tiny text-center'>Tidak ada tagihan</div>}
                     <div className='font-bold my-5 text-violet-800 flex justify-between items-center cursor-pointer' onClick={() => setOpen(!open)}>
                         <Title>Riwayat Tagihan</Title>
                         {/* <motion.div

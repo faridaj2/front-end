@@ -191,7 +191,7 @@ function DetailTagihan() {
                         <div className='bg-white shadow-md p-4 rounded-3xl border-1'>
                             <div className='flex justify-between items-center'>
                                 <Chip color='primary' variant='shadow'>{data.tenggat}</Chip>
-                                <Chip color='primary' variant='shadow' className='text-tiny'>{getStatus(data.tenggat, data.default)}</Chip>
+                                <Chip color={`${getStatus(data.tenggat, data.default) == 'Lunas' ? 'primary' : 'danger'}`} variant='shadow' className='text-tiny'>{getStatus(data.tenggat, data.default)}</Chip>
 
                             </div>
                             <Divider className='my-2' />
@@ -209,7 +209,9 @@ function DetailTagihan() {
                         </div>
                     </div>
                 }
+                <div className='h-20'>
 
+                </div>
             </Scroll>
         </DashboardTemplate>
     )
