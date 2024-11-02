@@ -142,11 +142,10 @@ function DetailTagihan() {
 
     return (
         <DashboardTemplate>
-            <div className='w-full flex justify-center items-center py-2 bg-white fixed z-50 pb-5'>
-                <Title>
-                    Detail Tagihan
-                </Title>
-            </div>
+
+            <Title>
+                Detail Tagihan
+            </Title>
 
             <Scroll>
                 <div className='flex justify-between px-2 pt-16'>
