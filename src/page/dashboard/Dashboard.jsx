@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 // Component
 import DashboardTemplate from '../../components/DashboardTemplate'
 import Scroll from '../../components/Scroll'
-
+import { FaRegClipboard } from "react-icons/fa6"
 import 'swiper/css';
+import Utils from '../../utils/Utilis'
+import AuthUser from '../../utils/AuthUser'
+
 // Icon
 
 // Navigate
@@ -15,13 +18,108 @@ import { useNavigate } from 'react-router-dom';
 function Dashboard() {
     const navigate = useNavigate()
 
+    const { toast, Toaster } = new Utils()
+    const { axios, user } = new AuthUser()
+
     const open = (numb) => {
         const number = parseInt(numb)
         window.open(`https://wa.me/${number}`, '_blank');
     }
 
+    const bank = [
+        {
+            "bank": "BCA",
+            "rekening": 5650197561,
+            "an": "ANAS AJI ILMAWAN"
+        },
+        {
+            "bank": "MUAMALAT",
+            "rekening": 7320014538,
+            "an": "ANAS AJI ILMAWAN"
+        },
+        {
+            "bank": "BRI",
+            "rekening": 808501000726505,
+            "an": "ANAS AJI ILMAWAN"
+        },
+        {
+            "bank": "BRI",
+            "rekening": 611201015733530,
+            "an": "ANAS AJI ILMAWAN"
+        },
+        {
+            "bank": "BSI",
+            "rekening": 1115557781,
+            "an": "PONDOK PESANTREN DARUSSALAM BLOKAGUNG 2"
+        }
+    ]
+
+    function copyText(textToCopy) {
+        // Create a temporary textarea element
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = textToCopy;
+
+        // Add the textarea to the document
+        document.body.appendChild(tempTextArea);
+
+        // Select the text in the textarea
+        tempTextArea.select();
+
+        // Copy the selected text
+        document.execCommand('copy');
+
+        // Remove the temporary textarea
+        document.body.removeChild(tempTextArea);
+        toast.success('Berhasil disalin')
+    }
+
+    const getDateNow = () => {
+        const date = new Date()
+        const year = date.getFullYear()
+        const month = String(date.getMonth() + 1).padStart(2, '0')
+        const day = String(date.getDate()).padStart(2, '0')
+        return `${year}-${month}-${day}`
+    }
+    const saveStorage = (date) => {
+        localStorage.setItem('date', date)
+    }
+    const getStorage = () => {
+        const date = localStorage.getItem('date') || null
+        return date
+    }
+
+    useEffect(() => {
+        if (getDateNow() !== getStorage()) {
+            saveStorage(getDateNow())
+            toast.success('Selamat Datang')
+
+            const apiUrl = 'https://api.fonnte.com/send';
+            const token = 'yzbhh1vaZxF3G8m4ojVC';
+
+            const data = {
+                target: '085156027913',
+                message: `Akun ${user.nama_siswa}, telah diakses di SantriConnect pada ${getDateNow()}`,
+            };
+            const headers = {
+                Authorization: `${token}`,
+            };
+
+
+            axios.post(apiUrl, data, { headers })
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+        // toast.success('Selamat Datang, Kembali')
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <DashboardTemplate>
+            <Toaster />
             <Scroll>
                 <div className='w-full h-56 absolute left-0 -z-10'>
                     <img src="/icon/apps/addons/corner.png" width={150} className='absolute right-0' alt="" />
@@ -82,6 +180,29 @@ function Dashboard() {
                             </div>
                         </div>
                     </div>
+                    <div className='mt-7 flex flex-col gap-2'>
+                        <div className='text-center font-bold text-green-800'>
+                            <h2 className='text-lg'>Rekening Resmi</h2>
+                            <h1 className='text-xl'>PP. Darussalam Blokagung 2</h1>
+                        </div>
+                        <div className='text-sm font-semibold flex flex-col gap-2'>
+                            {bank?.map((item, index) => (
+                                <div key={index} className='border-1 rounded-lg p-2 flex justify-between shadow border-green-500 items-center gap-3 bg-gradient-to-b from-green-100 text-green-700'>
+                                    <div>
+                                        <div>Bank : {item.bank}</div>
+                                        <div>No Rekening : {item.rekening}</div>
+                                        <div>A/N : {item.an}</div>
+                                    </div>
+                                    <button className='text-xl p-2 bg-white-400 border-1 rounded-full shadow' onClick={() => copyText(item.rekening)}>
+                                        <FaRegClipboard />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div className='h-20'>
+
                 </div>
             </Scroll >
         </DashboardTemplate >
