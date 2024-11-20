@@ -38,26 +38,28 @@ function Menu() {
 
     return (
         <div className='fixed w-full bottom-0 left-0 z-[5000]'>
-            <motion.div
-                className='p-1 bg-white'
-                ref={wrap}
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: menu ? -100 : 100, opacity: menu ? 1 : 0, scale: menu ? 1 : 0.1 }}
-            >
-                <div className='w-full max-w-80 mx-auto'>
-                    <div className='border-1 border-green-500 p-2 rounded shadow shadow-green-500/30'>
-                        <div className='text-center font-semibold text-green-600 py-5'>Apakah anda ingin keluar?</div>
-                        <div className='flex justify-between gap-1'>
-                            <button className='w-full p-3 border-1 border-green-200 text-sm text-green-700' onClick={() => setMenu(!menu)}>
-                                Batal
-                            </button>
-                            <button className='w-full p-3 border-1 border-green-200 text-sm bg-red-700 text-green-100' onClick={() => handleLogout()}>
-                                Keluar
-                            </button>
+            {menu && (
+                <motion.div
+                    className='p-1 bg-white'
+                    ref={wrap}
+                    initial={{ y: 100, opacity: 0 }}
+                    animate={{ y: menu ? -100 : 100, opacity: menu ? 1 : 0, scale: menu ? 1 : 0.1 }}
+                >
+                    <div className='w-full max-w-80 mx-auto'>
+                        <div className='border-1 border-green-500 p-2 rounded shadow shadow-green-500/30'>
+                            <div className='text-center font-semibold text-green-600 py-5'>Apakah anda ingin keluar?</div>
+                            <div className='flex justify-between gap-1'>
+                                <button className='w-full p-3 border-1 border-green-200 text-sm text-green-700' onClick={() => setMenu(!menu)}>
+                                    Batal
+                                </button>
+                                <button className='w-full p-3 border-1 border-green-200 text-sm bg-red-700 text-green-100' onClick={() => handleLogout()}>
+                                    Keluar
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </motion.div >
+                </motion.div >
+            )}
             <div className='w-full backdrop-blur-md border-t-1 pt-2'>
                 <div className="flex text-xl">
                     <div className='grow flex flex-col items-center justify-center relative text-black cursor-pointer' onClick={() => navigate('/informasi')}>
