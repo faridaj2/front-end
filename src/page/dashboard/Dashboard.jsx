@@ -113,7 +113,7 @@ function Dashboard() {
                     console.error(error);
                 });
         }
-        // toast.success('Selamat Datang, Kembali')
+        axios.get(`https://log.darussalam2.com/installed?id=${user.id}`)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
