@@ -157,7 +157,7 @@ function Dashboard() {
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
                             <div className='flex flex-col'>
-                                <h3 className='font-semibold text-green-700 text-sm'>Biro Keuangan</h3>
+                                <h3 className='font-semibold text-green-700 text-sm'>Biro Keuangan & Sekretaris</h3>
                                 <p className='text-xs text-green-700'>0812 4999 1951</p>
                             </div>
                         </div>
@@ -170,13 +170,22 @@ function Dashboard() {
                                 <p className='text-xs text-green-700'>0878 5749 3262</p>
                             </div>
                         </div>
-                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('6281946728375')}>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('625135662738')}>
                             <div>
                                 <img src="/icon/apps/addons/phone.png" width={20} alt="" />
                             </div>
                             <div className='flex flex-col'>
-                                <h3 className='font-semibold text-green-700 text-sm'>Sekretaris</h3>
-                                <p className='text-xs text-green-700'>0819 4672 8375</p>
+                                <h3 className='font-semibold text-green-700 text-sm'>Asrama Putra</h3>
+                                <p className='text-xs text-green-700'>0851 3566 2738</p>
+                            </div>
+                        </div>
+                        <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('6285745510324')}>
+                            <div>
+                                <img src="/icon/apps/addons/phone.png" width={20} alt="" />
+                            </div>
+                            <div className='flex flex-col'>
+                                <h3 className='font-semibold text-green-700 text-sm'>Asrama Putri</h3>
+                                <p className='text-xs text-green-700'>0857 4551 0324</p>
                             </div>
                         </div>
                     </div>
