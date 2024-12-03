@@ -123,7 +123,7 @@ function Dashboard() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const openLink = (link) => {
-        window.open(`https://darussalam2.com/warta/${link}`, '_blank');
+        window.open(`https://darussalam2.com/warta/${link}`, '_system');
     }
 
     return (
