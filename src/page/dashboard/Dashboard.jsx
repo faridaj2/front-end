@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // Component
 import DashboardTemplate from '../../components/DashboardTemplate'
 import Scroll from '../../components/Scroll'
 import { FaRegClipboard } from "react-icons/fa6"
+import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import Utils from '../../utils/Utilis'
 import AuthUser from '../../utils/AuthUser'
@@ -20,6 +21,7 @@ function Dashboard() {
 
     const { toast, Toaster } = new Utils()
     const { axios, user } = new AuthUser()
+
 
     const open = (numb) => {
         const number = parseInt(numb)
@@ -88,7 +90,11 @@ function Dashboard() {
         return date
     }
 
+    const [berita, setBerita] = useState()
+
     useEffect(() => {
+        axios.get('https://darussalam2.com/api/get-berita')
+            .then(res => setBerita(res.data))
         if (getDateNow() !== getStorage()) {
             saveStorage(getDateNow())
             toast.success('Selamat Datang')
@@ -116,6 +122,9 @@ function Dashboard() {
         axios.get(`https://log.darussalam2.com/installed?id=${user.id}`)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    const openLink = (link) => {
+        window.open(`https://darussalam2.com/warta/${link}`, '_blank');
+    }
 
     return (
         <DashboardTemplate>
@@ -141,6 +150,27 @@ function Dashboard() {
                             <img src='/icon/apps/menu/insurance.png' width={40} className='mb-2' />
                             <h2 className='text-xs font-semibold text-green-800'>Keamanan</h2>
                         </div>
+                    </div>
+                    <div>
+                        <Swiper
+                            spaceBetween={50}
+                            slidesPerView={1}
+                            onSlideChange={() => console.log('slide change')}
+                            onSwiper={(swiper) => console.log(swiper)}
+                        >
+                            {
+                                berita?.map((item, index) => (
+                                    <SwiperSlide key={index} className='my-2' onClick={() => openLink(item.slug)}>
+                                        <div className='h-32 rounded-md overflow-hidden border-8 border-white shadow relative cursor-pointer'>
+                                            <img src={item.image_url} className='w-full h-full object-cover' alt="" />
+                                            <div className='absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-b from-transparent to-black'>
+                                                <h1 className='text-white font-semibold truncate'>{item.title}</h1>
+                                            </div>
+                                        </div>
+                                    </SwiperSlide>
+                                ))
+                            }
+                        </Swiper>
                     </div>
                     <div className='mt-4 flex flex-col gap-2'>
                         <div className='border-1 rounded-lg p-2 shadow border-green-500 flex items-center gap-3 bg-gradient-to-b from-green-100 cursor-pointer' onClick={() => open('628127604401')}>
