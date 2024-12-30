@@ -152,7 +152,7 @@ function Dashboard() {
                         src={dataUser?.foto ? import.meta.env.VITE_API_BASE_URL + `/storage/photos/`+ dataUser?.foto : `https://i.pinimg.com/736x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg`}
                         width={100}
                         height={100}
-                        className='rounded-full -translate-y-16'
+                        className='rounded-full -translate-y-16 overflow-hidden'
                         />
                         <div className='-translate-y-16 mt-2 flex items-center flex-col'>
                             <h2 className='font-semibold'>{user.nama_siswa}</h2>
