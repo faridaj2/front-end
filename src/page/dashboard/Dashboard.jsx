@@ -256,9 +256,9 @@ function Dashboard() {
                                     <div className=''>
                                         <div className='flex gap-2'>
                                             <div className="text-xs rounded-full text-white font-normal bg-green-500 px-2">{item.bank}</div>
-                                            <div className="text-xs rounded-full text-white font-normal bg-green-500 px-2">{item.rekening}</div>
+                                            <div className="text-xs rounded-full text-white font-normal bg-green-500 px-2">{item.an}</div>
                                         </div>
-                                        <div className="text-xs font-normal mt-1">{item.an}</div>
+                                        <div className="text-xs font-normal mt-1">{item.rekening}</div>
                                     </div>
                                     <button className='text-xs p-2 bg-white-400 border-1 rounded-full shadow ml-auto' onClick={() => copyText(item.rekening)}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clipboard"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
