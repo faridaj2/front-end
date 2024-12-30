@@ -17,7 +17,6 @@ function Informasi() {
     http.get(`/api/user/get-user?id=${user.id}`)
       .then(res => {
         setData(res.data)
-        // console.log(res)
       })
   }
   return (
@@ -25,8 +24,9 @@ function Informasi() {
       <Scroll>
         <div className='p-2 bg-white shadow shadow-green-500/30 rounded-2xl m-2 border-1'>
           <div className='flex items-center'>
-            {data?.foto
-              ? <Image width={1000} className='w-full' src={import.meta.env.VITE_API_BASE_URL + '/storage/photos/' + data?.foto} /> : <Image width={500} src='https://i.pinimg.com/564x/ad/73/1c/ad731cd0da0641bb16090f25778ef0fd.jpg' />}
+              <Image
+                src={data?.foto == '' || data?.foto == undefined ? data?.foto : `https://i.pinimg.com/736x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg`}
+              />
           </div>
           <div className='mt-2 px-2'>
             <div className='flex justify-between items-center'>

@@ -10,6 +10,8 @@ import DetailTagihan from './page/dashboard/DetailTagihan';
 import UangSaku from './page/uangsaku/UangSaku';
 import Poin from './page/keamanan/Poin';
 import Riwayat from './page/keamanan/Riwayat';
+import PaymentSuccess from './page/uangsaku/PaymentSuccess';
+import RiwayatTopup from './page/uangsaku/RiwayatTopup';
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route exact path='/uang-saku' element={<UangSaku />} />
           <Route exact path='/poin' element={<Poin />} />
           <Route exact path='/riwayat' element={<Riwayat />} />
+          <Route exact path='/payment-success/:code' element={<PaymentSuccess />} />
+          <Route exact path='/riwayat-top-up' element={<RiwayatTopup />} />
         </Routes>
       </Router>
     </NextUIProvider>
