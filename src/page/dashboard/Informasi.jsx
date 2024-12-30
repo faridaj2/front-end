@@ -25,7 +25,7 @@ function Informasi() {
         <div className='p-2 bg-white shadow shadow-green-500/30 rounded-2xl m-2 border-1'>
           <div className='flex items-center'>
               <Image
-                src={data?.foto ? `/storage/photos/`+ data?.foto : `https://i.pinimg.com/736x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg`}
+                src={data?.foto ? import.meta.env.VITE_API_BASE_URL+ `/storage/photos/`+ data?.foto : `https://i.pinimg.com/736x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg`}
               />
           </div>
           <div className='mt-2 px-2'>

@@ -149,7 +149,7 @@ function Dashboard() {
                 <div className='bg-green-100 p-3 mx-6 rounded-3xl mb-10 flex justify-center flex flex-col items-center'>
                         <Image 
                         alt="NextUI hero Image"
-                        src={dataUser?.foto ? `/storage/photos/`+ dataUser?.foto : `https://i.pinimg.com/736x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg`}
+                        src={dataUser?.foto ? import.meta.env.VITE_API_BASE_URL + `/storage/photos/`+ dataUser?.foto : `https://i.pinimg.com/736x/cd/4b/d9/cd4bd9b0ea2807611ba3a67c331bff0b.jpg`}
                         width={100}
                         height={100}
                         className='rounded-full -translate-y-16'
