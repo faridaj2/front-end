@@ -1,13 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function Scroll({ children }) {
-
-
-    return (
-        <div className='mx-3' >
-            {children}
-        </div>
-    );
+    return <div className="mx-3 pb-10">{children}</div>;
 }
 
 export default Scroll;

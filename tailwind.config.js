@@ -10,17 +10,19 @@ export default {
   ],
   theme: {
     fontFamily: {
-      'sans': ['Montserrat', 'sans-serif']
+      sans: ["Roboto", "sans-serif"],
     },
     extend: {
       colors: {
-        'primary': '#22c55e',
-        'secondary': '#1C1C1C',
-        'tertiary': '#2B2B2B',
-      }
-
+        primary: "#22c55e",
+        secondary: "#1C1C1C",
+        tertiary: "#2B2B2B",
+        dark: "#121212",
+        brown: "#1E1E1E",
+        gold: "#22C55E",
+      },
     },
   },
   darkMode: "class",
   plugins: [nextui()],
-}
+};
