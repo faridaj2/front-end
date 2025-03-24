@@ -64,22 +64,22 @@ function UangSaku() {
                 <div className="text-white bg-brown mx-4 text-center text-2xl mb-2 p-5 rounded-2xl">
                     Rp. {money ? addComa(money) : 0}
                 </div>
-                {/*<div className="flex px-5">
+                <div className="flex px-5 gap-2">
                     <button
                         type="button"
                         onClick={openPayment}
-                        className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                        className="text-white bg-brown px-4 p-2 rounded-2xl"
                     >
                         Isi Saldo
                     </button>
                     <button
                         type="button"
                         onClick={() => navigate("/riwayat-top-up")}
-                        className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                        className="text-white bg-brown px-4 p-2 rounded-2xl"
                     >
                         Riwayat
                     </button>
-                </div>*/}
+                </div>
                 <div className="flex justify-between text-white items-center p-4 rounded-xl ">
                     <span>Riwayat</span>
                     <div className="w-1/2">

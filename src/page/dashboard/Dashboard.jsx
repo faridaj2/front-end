@@ -41,18 +41,8 @@ function Dashboard() {
             an: "ANAS AJI ILMAWAN",
         },
         {
-            bank: "MUAMALAT",
-            rekening: 7320014538,
-            an: "ANAS AJI ILMAWAN",
-        },
-        {
             bank: "BRI",
             rekening: 808501000726505,
-            an: "ANAS AJI ILMAWAN",
-        },
-        {
-            bank: "BRI",
-            rekening: 611201015733530,
             an: "ANAS AJI ILMAWAN",
         },
         {
