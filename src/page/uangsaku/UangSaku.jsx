@@ -34,7 +34,6 @@ function UangSaku() {
     useEffect(() => {
         if (!selected) return;
         getRiwayat();
-        console.log(riwayat);
     }, [selected]);
 
     const openPayment = () => {
@@ -59,12 +58,12 @@ function UangSaku() {
     };
     return (
         <DashboardTemplate>
-            <div className="h-full">
+            <div className="h-full pb-16">
                 <div className="h-2"></div>
                 <div className="text-white bg-brown mx-4 text-center text-2xl mb-2 p-5 rounded-2xl">
                     Rp. {money ? addComa(money) : 0}
                 </div>
-                <div className="flex px-5 gap-2">
+                <div className="flex px-5 gap-2 hidden">
                     <button
                         type="button"
                         onClick={openPayment}
@@ -132,7 +131,7 @@ function UangSaku() {
                     </AnimatePresence>
                 </div>
             </div>
-            {modalP && <ModalPayment close={setModalP} />}
+            {modalP && <ModalPayment close={setModalP} refresh={getTotal} />}
         </DashboardTemplate>
     );
 }

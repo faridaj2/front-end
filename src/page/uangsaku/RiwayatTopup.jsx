@@ -1,178 +1,120 @@
-import DashboardTemplate from "../../components/DashboardTemplate"
-import AuthUser from "../../utils/AuthUser"
-import { useEffect, useState } from "react"
-import Utils from "../../utils/Utilis"
-import { useNavigate } from "react-router-dom"
+import DashboardTemplate from "../../components/DashboardTemplate";
+import AuthUser from "../../utils/AuthUser";
+import { useEffect, useState, useRef } from "react";
+import Utils from "../../utils/Utilis";
+import { useNavigate } from "react-router-dom";
+import { Spinner } from "@nextui-org/react";
 
 const RiwayatTopup = () => {
-    const navigate = useNavigate()
-    const { http } = new AuthUser()
-    const [riwayat, setRiwayat] = useState([])
-    const { addComa } = new Utils()
+    const navigate = useNavigate();
+    const { http } = new AuthUser();
+    const [riwayat, setRiwayat] = useState([]);
+    const { addComa } = new Utils();
+    const [data, setData] = useState();
+    const [modal, setModal] = useState(false);
+    const [pending, setPending] = useState();
+    const modalEl = useRef(null);
+    const [realtimeId, setRealtimeId] = useState();
+    useEffect(() => {
+        getRiwayat();
+    }, []);
 
-    const code = [
-        {
-            "code": "BC",
-            "description": "BCA Virtual Account"
-        },
-        {
-            "code": "M2",
-            "description": "Mandiri Virtual Account"
-        },
-        {
-            "code": "VA",
-            "description": "Maybank Virtual Account"
-        },
-        {
-            "code": "I1",
-            "description": "BNI Virtual Account"
-        },
-        {
-            "code": "B1",
-            "description": "CIMB Niaga Virtual Account"
-        },
-        {
-            "code": "BT",
-            "description": "Permata Bank Virtual Account"
-        },
-        {
-            "code": "A1",
-            "description": "ATM Bersama"
-        },
-        {
-            "code": "AG",
-            "description": "Bank Artha Graha"
-        },
-        {
-            "code": "NC",
-            "description": "Bank Neo Commerce/BNC"
-        },
-        {
-            "code": "BR",
-            "description": "BRIVA"
-        },
-        {
-            "code": "S1",
-            "description": "Bank Sahabat Sampoerna"
-        },
-        {
-            "code": "DM",
-            "description": "Danamon Virtual Account"
-        },
-        {
-            "code": "BV",
-            "description": "BSI Virtual Account"
-        },
-        {
-            "code": "FT",
-            "description": "Pegadaian/ALFA/Pos"
-        },
-        {
-            "code": "IR",
-            "description": "Indomaret"
-        },
-        {
-            "code": "OV",
-            "description": "OVO (Support Void)"
-        },
-        {
-            "code": "SA",
-            "description": "Shopee Pay Apps (Support Void)"
-        },
-        {
-            "code": "LF",
-            "description": "LinkAja Apps (Fixed Fee)"
-        },
-        {
-            "code": "LA",
-            "description": "LinkAja Apps (Percentage Fee)"
-        },
-        {
-            "code": "DA",
-            "description": "DANA"
-        },
-        {
-            "code": "SL",
-            "description": "Shopee Pay Account Link"
-        },
-        {
-            "code": "OL",
-            "description": "OVO Account Link"
-        },
-        {
-            "code": "JP",
-            "description": "Jenius Pay"
-        },
-        {
-            "code": "SP",
-            "description": "Shopee Pay"
-        },
-        {
-            "code": "LQ",
-            "description": "LinkAja"
-        },
-        {
-            "code": "NQ",
-            "description": "Nobu"
-        },
-        {
-            "code": "DQ",
-            "description": "Dana"
-        },
-        {
-            "code": "GQ",
-            "description": "Gudang Voucher"
-        },
-        {
-            "code": "SQ",
-            "description": "Nusapay"
-        },
-        {
-            "code": "DN",
-            "description": "Indodana Paylater"
-        },
-        {
-            "code": "AT",
-            "description": "ATOME"
-        },
-        {
-            "code": "VC",
-            "description": "(Visa / Master Card / JCB)"
-        }
-    ]
+    const getRiwayat = () => {
+        http.get("/api/user/riwayat-uang-saku")
+            .then((res) => {
+                setRiwayat(res.data);
+            })
+            .catch((err) => console.log(err));
+    };
 
     useEffect(() => {
-        http.get('/api/user/riwayat-uang-saku')
-            .then(res => {
-                setRiwayat(res.data)
+        const click = (e) => {
+            if (modal && e.target === modalEl.current) {
+                setModal(false);
+                setPending();
+                setRealtimeId();
+            }
+        };
+        document.addEventListener("click", click);
+        return () => {
+            document.removeEventListener("click", click);
+        };
+    }, [modal]);
+
+    useEffect(() => {
+        let id;
+        if (realtimeId) {
+            id = setInterval(() => {
+                getData(realtimeId);
+            }, 5000);
+        }
+        return () => clearInterval(id);
+    }, [realtimeId]);
+
+    const openModal = (item) => {
+        setModal(true);
+        if (item.status != "success") {
+            const data = {
+                refKode: item.ref_kode,
+                idRefrence: item.id_refrence,
+            };
+            http.get("/api/user/get-status-trx", { params: data }).then(
+                (res) => {
+                    setPending(res.data.data);
+                    setRealtimeId(item.id);
+                },
+            );
+        }
+        setData(item);
+    };
+    function getData(id) {
+        http.get("/api/user/check-status-realtime", {
+            params: { id },
+            timeout: 5000,
+        })
+            .then((res) => {
+                if (res.data.status != false) {
+                    setData(res.data);
+                    setRealtimeId();
+                    getRiwayat();
+                }
             })
-            .catch(err => console.log(err))
-    }, [])
-    const openModal = item => {
-        checkout.process(item, {
-            defaultLanguage: "id", //opsional pengaturan bahasa
-            successEvent: function (result) {
-
-            },
-        });
-
+            .catch((er) => console.log(er));
     }
+
     return (
         <DashboardTemplate>
-            <div className="px-2">
-                <div className="my-2 border-2 rounded-xl p-2 font-semibold tracking-wide">Riwayat Transaksi</div>
-                <div className="flex gap-2 my-4 cursor-pointer" onClick={() => navigate('/uang-saku')}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left"><path d="M6 8L2 12L6 16" /><path d="M2 12H22" /></svg>
-                    <span>Kembali</span>
+            <div className="px-2 pb-20">
+                <div
+                    className="flex gap-2 cursor-pointer text-white py-5"
+                    onClick={() => navigate("/uang-saku")}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="lucide lucide-chevron-left"
+                    >
+                        <path d="m15 18-6-6 6-6" />
+                    </svg>
+                    <span>Riwayat Transaksi</span>
                 </div>
 
-
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <div className="relative scroll overflow-y-auto shadow-md sm:rounded-lg bg-dark">
+                    <table className="w-full text-sm text-left">
+                        <thead className="text-xs text-white uppercase bg-gray-500">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Koda Transaksi
+                                    Kode Transaksi
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Status
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Jumlah
@@ -186,30 +128,143 @@ const RiwayatTopup = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {riwayat?.map(item => (
-                                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={item.id}>
-                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        {item.kode_transaksi}
+                            {riwayat?.map((item) => (
+                                <tr
+                                    className="odd:bg-brown text-white/70 even:bg-dark border-b border-white/40"
+                                    key={item.id}
+                                >
+                                    <th
+                                        scope="row"
+                                        className="px-6 py-4 font-medium whitespace-nowrap dark:text-white"
+                                    >
+                                        {item.ref_kode}
                                     </th>
+                                    <td className="px-6 py-4">{item.status}</td>
                                     <td className="px-6 py-4">
-                                        Rp.{addComa(item.jumlah)}
+                                        Rp.{addComa(item.nominal)}
                                     </td>
                                     <td className="px-6 py-4 truncate">
                                         {item.nama_pembayaran}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => openModal(item.no_refrence)}>Lihat</button>
+                                        <button
+                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                            onClick={() => openModal(item)}
+                                        >
+                                            Lihat
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
-
                         </tbody>
                     </table>
                 </div>
-
-
+            </div>
+            <div
+                ref={modalEl}
+                className={`fixed bg-black/50 backdrop-blur w-full h-full top-0 left-0 flex items-center justify-center ${!modal && "hidden"}`}
+            >
+                <div className="relative rounded-2xl overflow-hidden max-w-sm bg-dark w-full text-white rounded-2xl p-4 h-96">
+                    <div className="">
+                        <div className="text-center tracking-wider leading-loose">
+                            Status Transaksi
+                        </div>
+                        <div className="text-center text-2xl p-12 bg-brown rounded-2xl my-4">
+                            Rp. {addComa(data?.nominal)}
+                        </div>
+                        <div className="flex py-3 justify-between border-b">
+                            <div className="text-white/80 font-light tracking-wider">
+                                Metode
+                            </div>
+                            <div>{data?.metode}</div>
+                        </div>
+                        <div className="flex py-3 justify-between border-b">
+                            <div className="text-white/80 font-light tracking-wider">
+                                Status
+                            </div>
+                            <div>{data?.status}</div>
+                        </div>
+                        <div className="flex py-3 justify-between">
+                            <div className="text-white/80 font-light tracking-wider">
+                                Waktu
+                            </div>
+                            <div>{data?.waktu_pembayaran}</div>
+                        </div>
+                    </div>
+                    <div
+                        className={`absolute w-full h-full bg-dark top-0 left-0 p-6 overflow-y-auto scroll ${data?.status == "success" && "hidden"}`}
+                    >
+                        <div className="text-center border-b border-white/20 p-4">
+                            {data?.ref_kode}
+                        </div>
+                        <div className="text-center p-4">
+                            <div
+                                className={`text-white/60 ${pending?.payment_method == "QRIS" && "hidden"}`}
+                            >
+                                Nomor {pending?.payment_method}
+                            </div>
+                            <div
+                                className={`bg-white ${pending?.payment_method != "QRIS" && "hidden"}`}
+                            >
+                                <img src={pending?.target} alt="" />
+                            </div>
+                            <div
+                                className={`p-4 flex gap-2 items-center justify-center ${pending?.payment_method == "QRIS" && "hidden"}`}
+                            >
+                                {pending?.target}{" "}
+                                <button
+                                    onClick={() =>
+                                        navigator.clipboard.writeText(
+                                            pending?.target,
+                                        )
+                                    }
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        className="lucide lucide-copy"
+                                    >
+                                        <rect
+                                            width="14"
+                                            height="14"
+                                            x="8"
+                                            y="8"
+                                            rx="2"
+                                            ry="2"
+                                        />
+                                        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex justify-between p-4 border-b border-white/20">
+                            <div className="text-white/60">Nama</div>
+                            <div>{pending?.nama}</div>
+                        </div>
+                        <div className="flex justify-between p-4 border-b border-white/20">
+                            <div className="text-white/60">Payment Method</div>
+                            <div>{pending?.payment_method}</div>
+                        </div>
+                        <div className="flex justify-between p-4">
+                            <div className="text-white/60">Nominal</div>
+                            <div>Rp. {addComa(pending?.amount)}</div>
+                        </div>
+                        {!pending && (
+                            <div className="absolute top-0 left-0 bg-dark w-full h-full flex items-center justify-center">
+                                <Spinner />
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         </DashboardTemplate>
-    )
-}
-export default RiwayatTopup
+    );
+};
+export default RiwayatTopup;
