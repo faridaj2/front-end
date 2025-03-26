@@ -63,7 +63,7 @@ function UangSaku() {
                 <div className="text-white bg-brown mx-4 text-center text-2xl mb-2 p-5 rounded-2xl">
                     Rp. {money ? addComa(money) : 0}
                 </div>
-                <div className="flex px-5 gap-2 hidden">
+                <div className="flex px-5 gap-2">
                     <button
                         type="button"
                         onClick={openPayment}
