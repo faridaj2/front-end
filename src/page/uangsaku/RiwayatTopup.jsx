@@ -53,7 +53,8 @@ const RiwayatTopup = () => {
 
     const openModal = (item) => {
         setModal(true);
-        if (item.status != "success") {
+        setData(item);
+        if (item.status != "PAID") {
             const data = {
                 refKode: item.ref_kode,
                 idRefrence: item.id_refrence,
@@ -65,7 +66,6 @@ const RiwayatTopup = () => {
                 },
             );
         }
-        setData(item);
     };
     function getData(id) {
         http.get("/api/user/check-status-realtime", {
@@ -111,7 +111,10 @@ const RiwayatTopup = () => {
                         <thead className="text-xs text-white uppercase bg-gray-500">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Kode Transaksi
+                                    Action
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Metode
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Status
@@ -122,9 +125,6 @@ const RiwayatTopup = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Pembayaran
                                 </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Action
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,19 +133,6 @@ const RiwayatTopup = () => {
                                     className="odd:bg-brown text-white/70 even:bg-dark border-b border-white/40"
                                     key={item.id}
                                 >
-                                    <th
-                                        scope="row"
-                                        className="px-6 py-4 font-medium whitespace-nowrap dark:text-white"
-                                    >
-                                        {item.ref_kode}
-                                    </th>
-                                    <td className="px-6 py-4">{item.status}</td>
-                                    <td className="px-6 py-4">
-                                        Rp.{addComa(item.nominal)}
-                                    </td>
-                                    <td className="px-6 py-4 truncate">
-                                        {item.nama_pembayaran}
-                                    </td>
                                     <td className="px-6 py-4">
                                         <button
                                             className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
@@ -153,6 +140,19 @@ const RiwayatTopup = () => {
                                         >
                                             Lihat
                                         </button>
+                                    </td>
+                                    <td
+                                        scope="row"
+                                        className="px-6 py-4 font-medium whitespace-nowrap dark:text-white"
+                                    >
+                                        {item.metode}
+                                    </td>
+                                    <td className="px-6 py-4">{item.status}</td>
+                                    <td className="px-6 py-4">
+                                        Rp.{addComa(item.nominal)}
+                                    </td>
+                                    <td className="px-6 py-4 truncate">
+                                        {item.nama_pembayaran}
                                     </td>
                                 </tr>
                             ))}
@@ -192,42 +192,44 @@ const RiwayatTopup = () => {
                         </div>
                     </div>
                     <div
-                        className={`absolute w-full h-full bg-dark top-0 left-0 p-6 overflow-y-auto scroll ${data?.status == "success" && "hidden"}`}
+                        className={`absolute w-full h-full bg-dark top-0 left-0 p-6 overflow-y-auto scroll ${data?.status == "PAID" && "hidden"}`}
                     >
-                        <div className="text-center border-b border-white/20 p-4">
+                        <div
+                            className={`text-center border-b border-white/20 p-4 ${pending?.qr_url && "hidden"}`}
+                        >
                             {data?.ref_kode}
                         </div>
                         <div className="text-center p-4">
                             <div
-                                className={`text-white/60 ${pending?.payment_method == "QRIS" && "hidden"}`}
+                                className={`text-white/60 ${pending?.qr_url && "hidden"}`}
                             >
                                 Nomor {pending?.payment_method}
                             </div>
                             <div
-                                className={`bg-white ${pending?.payment_method != "QRIS" && "hidden"}`}
+                                className={`mb-2 bg-white ${!pending?.qr_url && "hidden"}`}
                             >
                                 <img
                                     className="w-full"
                                     src={
                                         pending?.url_qr
                                             ? pending?.url_qr
-                                            : pending?.target
+                                            : pending?.qr_url
                                     }
                                     alt=""
                                 />
                             </div>
                             <div
-                                className={`p-4 flex gap-2 items-center justify-center ${pending?.payment_method == "QRIS" && "hidden"}`}
+                                className={`p-4 flex gap-2 items-center justify-center ${pending?.qr_url && "hidden"}`}
                             >
-                                {pending?.url_qr
+                                {pending?.qr_url
                                     ? pending?.url_qr
-                                    : pending?.target}{" "}
+                                    : pending?.pay_code}{" "}
                                 <button
                                     onClick={() =>
                                         navigator.clipboard.writeText(
                                             pending?.url_qr
                                                 ? pending?.url_qr
-                                                : pending?.target,
+                                                : pending?.pay_code,
                                         )
                                     }
                                 >
@@ -256,9 +258,15 @@ const RiwayatTopup = () => {
                                 </button>
                             </div>
                         </div>
+                        <div
+                            className={`flex justify-between p-4 border-b border-white/20 ${pending?.qr_url && "hidden"}`}
+                        >
+                            <div className="text-white/60">Kode Pembayaran</div>
+                            <div>{pending?.merchant_ref}</div>
+                        </div>
                         <div className="flex justify-between p-4 border-b border-white/20">
                             <div className="text-white/60">Nama</div>
-                            <div>{pending?.nama}</div>
+                            <div>{pending?.customer_name}</div>
                         </div>
                         <div className="flex justify-between p-4 border-b border-white/20">
                             <div className="text-white/60">Payment Method</div>

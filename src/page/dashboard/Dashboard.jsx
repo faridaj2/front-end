@@ -372,7 +372,7 @@ function Dashboard() {
                                             strokeWidth="2"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
-                                            class="lucide lucide-landmark"
+                                            className="lucide lucide-landmark"
                                         >
                                             <line
                                                 x1="3"

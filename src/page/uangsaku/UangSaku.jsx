@@ -18,6 +18,7 @@ function UangSaku() {
     const [selected, setSelected] = useState(); //Bulan yang terpilih
     const [riwayat, setRiwayat] = useState();
     const [modalP, setModalP] = useState(false);
+    const [history, setHistory] = useState(true);
 
     // Use Effect
     useEffect(() => {
@@ -52,16 +53,17 @@ function UangSaku() {
         });
     };
     const getTotal = () => {
-        http.get(`/api/user/get-user?id=${user.id}`).then((res) =>
-            setMoney(res.data.uang_saku),
-        );
+        http.get(`/api/user/get-user?id=${user.id}`).then((res) => {
+            setMoney(res.data);
+            setHistory(true);
+        });
     };
     return (
         <DashboardTemplate>
             <div className="h-full pb-16">
                 <div className="h-2"></div>
                 <div className="text-white bg-brown mx-4 text-center text-2xl mb-2 p-5 rounded-2xl">
-                    Rp. {money ? addComa(money) : 0}
+                    Rp. {money ? addComa(money.uang_saku) : 0}
                 </div>
                 <div className="flex px-5 gap-2">
                     <button
@@ -74,11 +76,20 @@ function UangSaku() {
                     <button
                         type="button"
                         onClick={() => navigate("/riwayat-top-up")}
-                        className="text-white bg-brown px-4 p-2 rounded-2xl"
+                        className={`text-white bg-brown px-4 p-2 rounded-2xl relative ${money?.history && "border border-yellow-400"}`}
                     >
                         Riwayat
+                        {money?.history && (
+                            <span class="animate-ping absolute inline-flex h-2 w-2 top-0 right-0 rounded-full bg-yellow-400 opacity-75"></span>
+                        )}
                     </button>
                 </div>
+                {money?.history && (
+                    <div className="text-white/70 text-xs my-3 px-3">
+                        Anda mempunyai riwayat pembayaran yang belum
+                        terselesaikan
+                    </div>
+                )}
                 <div className="flex justify-between text-white items-center p-4 rounded-xl ">
                     <span>Riwayat</span>
                     <div className="w-1/2">

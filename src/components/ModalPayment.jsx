@@ -34,9 +34,9 @@ const ModalPayment = ({ close, refresh }) => {
         };
     }, []);
 
-    useEffect(() => {
-        setBill();
-    }, [state]);
+    // useEffect(() => {
+    //     setBill();
+    // }, [state]);
 
     useEffect(() => {
         let id;
@@ -59,20 +59,7 @@ const ModalPayment = ({ close, refresh }) => {
         if (money == "") return;
 
         http.get("/api/user/get-list").then((res) => {
-            const data = [];
-            const accept = [
-                "QRIS",
-                "BCAVA",
-                "BSI",
-                "BRIVA",
-                "MANDIRIVA",
-                "BNIVA",
-            ];
-            accept.forEach((item) => {
-                const acc = res.data.data.find((method) => method.nama == item);
-                data.push(acc);
-            });
-            setMethod(data);
+            setMethod(res.data.data);
         });
 
         setMoney(money);
@@ -84,12 +71,32 @@ const ModalPayment = ({ close, refresh }) => {
     };
     const nextDetail = () => {
         if (!selectedMethod) return;
-        const admin = method.find((item) => item.nama == selectedMethod).biaya;
+        const admin = method.find((item) => item.code == selectedMethod);
+        let fee;
+        if (admin.total_fee.flat != 0) {
+            if (fee) {
+                fee = fee + parseInt(admin.total_fee.flat);
+            } else {
+                fee = parseInt(admin.total_fee.flat);
+            }
+        }
+        if (admin.total_fee.percent != 0) {
+            const percent = money * (admin.total_fee.percent / 100);
+            if (fee) {
+                fee = fee + percent;
+            } else {
+                fee = percent;
+            }
+        }
+        console.log(admin);
         const dtl = {
             nominal: money,
-            metode: selectedMethod,
-            admin: admin > 100 ? admin : Math.ceil(money * (admin / 100)),
+            icon: admin.icon_url,
+            fee: fee,
+            total: parseInt(fee) + parseInt(money),
+            method: admin.code,
         };
+        console.log(dtl);
         setDetail(dtl);
         setState(2);
     };
@@ -102,14 +109,11 @@ const ModalPayment = ({ close, refresh }) => {
         setState(3);
         http.post("api/user/create-bill", formData).then((res) => {
             if (res.data.status) {
-                const data = res.data.data;
-                data.guide = res.data.payment_guide;
-                data.metode = method.find(
-                    (item) => item.nama == selectedMethod,
-                ).metode;
+                const data = res.data;
                 setBill(data);
-                let idHistory = res.data.id_history;
+                let idHistory = data.id_history;
                 setHistoryId(idHistory);
+                console.log(data);
             } else {
                 setState(2);
                 setBill();
@@ -200,19 +204,33 @@ const ModalPayment = ({ close, refresh }) => {
                         >
                             {method?.map((item) => (
                                 <div
-                                    className={`bg-brown p-2 rounded-2xl cursor-pointer ${selectedMethod == item.nama && "border bg-gradient-to-b from-blue-500/20"}`}
-                                    key={item.nama}
-                                    onClick={() => setSelectedMethod(item.nama)}
+                                    className={`bg-brown p-2 rounded-2xl cursor-pointer flex gap-2 items-center ${selectedMethod == item.code && "border bg-gradient-to-b from-blue-500/20"}`}
+                                    key={item.code}
+                                    onClick={() => setSelectedMethod(item.code)}
                                 >
-                                    <div>{item.nama}</div>
-                                    <div className="text-tiny tracking-wide text-white/50">
-                                        Metode : {item.metode}
+                                    <div className="bg-white p-2 rounded-xl">
+                                        <img
+                                            src={item.icon_url}
+                                            className="w-24"
+                                            alt=""
+                                        />
                                     </div>
-                                    <div className="text-tiny tracking-wide text-white/50">
-                                        Admin :{" "}
-                                        {item.biaya < 100
-                                            ? item.biaya + "%"
-                                            : "Rp." + addComa(item.biaya)}
+                                    <div>
+                                        <div>{item.name}</div>
+                                        <div className="text-tiny tracking-wide text-white/50">
+                                            Metode : {item.name}
+                                        </div>
+                                        <div className="text-tiny tracking-wide text-white/50">
+                                            Admin :{" "}
+                                            {"Rp." +
+                                                addComa(
+                                                    item.total_fee.flat,
+                                                )}{" "}
+                                            {item.total_fee.percent != 0 &&
+                                                "+ " +
+                                                    item.total_fee.percent +
+                                                    "%"}
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -253,11 +271,13 @@ const ModalPayment = ({ close, refresh }) => {
                         <div className="">Detail</div>
                     </div>
                     <div className="flex flex-col h-full">
-                        <div className="border-b border-white/20 flex justify-between p-2">
+                        <div className="border-b border-white/20 flex items-center justify-between p-2">
                             <div className="tracking-wide text-white/60">
                                 Metode Pembayaran
                             </div>
-                            <div>{detail.metode}</div>
+                            <div>
+                                <img src={detail.icon} className="h-8" alt="" />
+                            </div>
                         </div>
                         <div className="border-b border-white/20 flex justify-between p-2">
                             <div className="tracking-wide text-white/60">
@@ -269,7 +289,7 @@ const ModalPayment = ({ close, refresh }) => {
                             <div className="tracking-wide text-white/60">
                                 Biaya Admin
                             </div>
-                            <div>Rp. {addComa(detail.admin)}</div>
+                            <div>Rp. {addComa(detail.fee)}</div>
                         </div>
                         <div
                             className={`border-b border-white/20 flex justify-between p-2 bg-white/20 mt-auto ${selectedMethod != "OVO" && "mb-20"}`}
@@ -277,13 +297,7 @@ const ModalPayment = ({ close, refresh }) => {
                             <div className="tracking-wide text-white">
                                 Total
                             </div>
-                            <div>
-                                Rp.{" "}
-                                {addComa(
-                                    parseInt(detail.admin) +
-                                        parseInt(detail.nominal),
-                                )}
-                            </div>
+                            <div>Rp. {addComa(detail.total)}</div>
                         </div>
                         <div
                             className={`my-3 w-full ${selectedMethod != "OVO" && "hidden"}`}
@@ -332,33 +346,35 @@ const ModalPayment = ({ close, refresh }) => {
                         <div className="">Tagihan</div>
                     </div>
                     {bill && (
-                        <div className="relative overflow-y-auto scroll">
-                            <div className="text-center border-b border-white/20 p-4">
-                                {bill?.ref_kode}
+                        <div className="relative h-full overflow-y-auto scroll">
+                            <div
+                                className={`text-center border-b border-white/20 p-4 ${bill?.qr_url && "hidden"}`}
+                            >
+                                {bill?.merchant_ref}
                             </div>
                             <div className="text-center p-4">
                                 <div
-                                    className={`bg-white ${bill?.code_payment != "QRIS" && "hidden"}`}
+                                    className={`bg-white ${!bill?.qr_url && "hidden"}`}
                                 >
                                     <img
                                         className="w-full"
-                                        src={bill?.target}
+                                        src={bill?.qr_url}
                                         alt=""
                                     />
                                 </div>
                                 <div
-                                    className={`text-white/60 ${bill?.code_payment == "QRIS" && "hidden"}`}
+                                    className={`text-white/60 ${bill?.qr_url && "hidden"}`}
                                 >
-                                    Nomor {bill.code_payment}
+                                    Nomor {bill.payment_method}
                                 </div>
                                 <div
-                                    className={`p-4 flex gap-2 items-center justify-center ${bill?.code_payment == "QRIS" && "hidden"}`}
+                                    className={`p-4 flex gap-2 items-center justify-center ${bill?.qr_url && "hidden"}`}
                                 >
-                                    {bill.target}{" "}
+                                    {bill.pay_code}{" "}
                                     <button
                                         onClick={() =>
                                             navigator.clipboard.writeText(
-                                                bill.target,
+                                                bill.pay_code,
                                             )
                                         }
                                     >
@@ -389,17 +405,17 @@ const ModalPayment = ({ close, refresh }) => {
                             </div>
                             <div className="flex justify-between p-4 border-b border-white/20">
                                 <div className="text-white/60">Nama</div>
-                                <div>{bill.nama}</div>
+                                <div>{bill.customer_name}</div>
                             </div>
                             <div className="flex justify-between p-4 border-b border-white/20">
                                 <div className="text-white/60">
                                     Payment Method
                                 </div>
-                                <div>{bill.code_payment}</div>
+                                <div>{bill.payment_method}</div>
                             </div>
                             <div className="flex justify-between p-4">
                                 <div className="text-white/60">Nominal</div>
-                                <div>Rp. {addComa(bill.nominal)}</div>
+                                <div>Rp. {addComa(bill.amount)}</div>
                             </div>
                             <div
                                 className={`w-full h-full bg-dark top-0 left-0 absolute flex items-center justify-center ${!trx && "hidden"}`}
