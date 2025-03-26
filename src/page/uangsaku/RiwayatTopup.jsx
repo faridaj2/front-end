@@ -206,7 +206,11 @@ const RiwayatTopup = () => {
                             <div
                                 className={`bg-white ${pending?.payment_method != "QRIS" && "hidden"}`}
                             >
-                                <img src={pending?.url_qr} alt="" />
+                                <img
+                                    className="w-full"
+                                    src={pending?.url_qr}
+                                    alt=""
+                                />
                             </div>
                             <div
                                 className={`p-4 flex gap-2 items-center justify-center ${pending?.payment_method == "QRIS" && "hidden"}`}

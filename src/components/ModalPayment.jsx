@@ -329,7 +329,11 @@ const ModalPayment = ({ close, refresh }) => {
                                 <div
                                     className={`bg-white ${bill?.code_payment != "QRIS" && "hidden"}`}
                                 >
-                                    <img src={bill?.target} alt="" />
+                                    <img
+                                        className="w-full"
+                                        src={bill?.target}
+                                        alt=""
+                                    />
                                 </div>
                                 <div
                                     className={`text-white/60 ${bill?.code_payment == "QRIS" && "hidden"}`}
