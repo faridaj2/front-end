@@ -80,7 +80,7 @@ function UangSaku() {
                     >
                         Riwayat
                         {money?.history && (
-                            <span class="animate-ping absolute inline-flex h-2 w-2 top-0 right-0 rounded-full bg-yellow-400 opacity-75"></span>
+                            <span className="pulse absolute left-0 top-0 inline-flex w-full h-full rounded-2xl bg-yellow-400 opacity-75"></span>
                         )}
                     </button>
                 </div>

@@ -6,6 +6,8 @@ import { Spinner } from "@nextui-org/react";
 
 const ModalPayment = ({ close, refresh }) => {
     const navigate = useNavigate();
+    const { toast, Toaster } = new Utils();
+
     const { addComa } = new Utils();
     const { user, http } = new AuthUser();
     const [jumlah, setJumlah] = useState("");
@@ -25,6 +27,7 @@ const ModalPayment = ({ close, refresh }) => {
         const handleClickOutside = (event) => {
             if (bgModal.current && bgModal.current == event.target) {
                 close(false);
+                refresh();
                 setHistoryId();
             }
         };
@@ -69,6 +72,10 @@ const ModalPayment = ({ close, refresh }) => {
     const change = (change) => {
         setJumlah(change);
     };
+    function copyText(textToCopy) {
+        navigator.clipboard.writeText(textToCopy);
+        toast("Tersalin");
+    }
     const nextDetail = () => {
         if (!selectedMethod) return;
         const admin = method.find((item) => item.code == selectedMethod);
@@ -88,7 +95,6 @@ const ModalPayment = ({ close, refresh }) => {
                 fee = percent;
             }
         }
-        console.log(admin);
         const dtl = {
             nominal: money,
             icon: admin.icon_url,
@@ -96,7 +102,6 @@ const ModalPayment = ({ close, refresh }) => {
             total: parseInt(fee) + parseInt(money),
             method: admin.code,
         };
-        console.log(dtl);
         setDetail(dtl);
         setState(2);
     };
@@ -113,7 +118,6 @@ const ModalPayment = ({ close, refresh }) => {
                 setBill(data);
                 let idHistory = data.id_history;
                 setHistoryId(idHistory);
-                console.log(data);
             } else {
                 setState(2);
                 setBill();
@@ -140,6 +144,7 @@ const ModalPayment = ({ close, refresh }) => {
             className="fixed w-full h-full bg-black/50 top-0 left-0 z-[10000] backdrop-blur-md flex justify-center items-center"
             ref={bgModal}
         >
+            <Toaster />
             <div className="bg-dark rounded-xl min-h-96 max-w-sm w-full mx-2 p-5 relative overflow-hidden">
                 <div>
                     <label
@@ -372,11 +377,7 @@ const ModalPayment = ({ close, refresh }) => {
                                 >
                                     {bill.pay_code}{" "}
                                     <button
-                                        onClick={() =>
-                                            navigator.clipboard.writeText(
-                                                bill.pay_code,
-                                            )
-                                        }
+                                        onClick={() => copyText(bill.pay_code)}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

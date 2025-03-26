@@ -52,22 +52,8 @@ function Dashboard() {
     ];
 
     function copyText(textToCopy) {
-        // Create a temporary textarea element
-        var tempTextArea = document.createElement("textarea");
-        tempTextArea.value = textToCopy;
-
-        // Add the textarea to the document
-        document.body.appendChild(tempTextArea);
-
-        // Select the text in the textarea
-        tempTextArea.select();
-
-        // Copy the selected text
-        document.execCommand("copy");
-
-        // Remove the temporary textarea
-        document.body.removeChild(tempTextArea);
-        toast.success("Berhasil disalin");
+        navigator.clipboard.writeText(textToCopy);
+        toast("Tersalin");
     }
 
     const getDateNow = () => {

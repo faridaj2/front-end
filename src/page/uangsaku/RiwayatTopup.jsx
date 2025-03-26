@@ -8,6 +8,8 @@ import { Spinner } from "@nextui-org/react";
 const RiwayatTopup = () => {
     const navigate = useNavigate();
     const { http } = new AuthUser();
+    const { toast, Toaster } = new Utils();
+
     const [riwayat, setRiwayat] = useState([]);
     const { addComa } = new Utils();
     const [data, setData] = useState();
@@ -18,6 +20,10 @@ const RiwayatTopup = () => {
     useEffect(() => {
         getRiwayat();
     }, []);
+    function copyText(textToCopy) {
+        navigator.clipboard.writeText(textToCopy);
+        toast("Tersalin");
+    }
 
     const getRiwayat = () => {
         http.get("/api/user/riwayat-uang-saku")
@@ -52,8 +58,12 @@ const RiwayatTopup = () => {
     }, [realtimeId]);
 
     const openModal = (item) => {
-        setModal(true);
         setData(item);
+        if (item.status == "PAID" || item.status == "UNPAID") {
+            setModal(true);
+        } else {
+            return toast("Kadaluarsa / Gagal");
+        }
         if (item.status != "PAID") {
             const data = {
                 refKode: item.ref_kode,
@@ -84,6 +94,7 @@ const RiwayatTopup = () => {
 
     return (
         <DashboardTemplate>
+            <Toaster />
             <div className="px-2 pb-20">
                 <div
                     className="flex gap-2 cursor-pointer text-white py-5"
@@ -226,7 +237,7 @@ const RiwayatTopup = () => {
                                     : pending?.pay_code}{" "}
                                 <button
                                     onClick={() =>
-                                        navigator.clipboard.writeText(
+                                        copyText(
                                             pending?.url_qr
                                                 ? pending?.url_qr
                                                 : pending?.pay_code,

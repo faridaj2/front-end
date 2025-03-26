@@ -17,3 +17,18 @@
 .scroll::-webkit-scrollbar-thumb {
   background-color: #121212;
 }
+
+.pulse {
+  animation: pulse-animation 0.5s infinite;
+  opacity: 0;
+}
+
+@keyframes pulse-animation {
+  25% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
+}
