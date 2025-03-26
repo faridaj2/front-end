@@ -24,7 +24,7 @@ function Dashboard() {
 
     const getUser = () => {
         http.get(`/api/user/get-user?id=${user.id}`).then((res) => {
-            setDataUser(res.data);
+            setDataUser(res.data.siswa);
         });
     };
 
