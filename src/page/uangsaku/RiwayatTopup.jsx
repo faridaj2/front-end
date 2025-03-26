@@ -208,18 +208,26 @@ const RiwayatTopup = () => {
                             >
                                 <img
                                     className="w-full"
-                                    src={pending?.url_qr}
+                                    src={
+                                        pending?.url_qr
+                                            ? pending?.url_qr
+                                            : pending?.target
+                                    }
                                     alt=""
                                 />
                             </div>
                             <div
                                 className={`p-4 flex gap-2 items-center justify-center ${pending?.payment_method == "QRIS" && "hidden"}`}
                             >
-                                {pending?.url_qr}{" "}
+                                {pending?.url_qr
+                                    ? pending?.url_qr
+                                    : pending?.target}{" "}
                                 <button
                                     onClick={() =>
                                         navigator.clipboard.writeText(
-                                            pending?.url_qr,
+                                            pending?.url_qr
+                                                ? pending?.url_qr
+                                                : pending?.target,
                                         )
                                     }
                                 >

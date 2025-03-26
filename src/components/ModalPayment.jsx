@@ -35,6 +35,10 @@ const ModalPayment = ({ close, refresh }) => {
     }, []);
 
     useEffect(() => {
+        setBill();
+    }, [state]);
+
+    useEffect(() => {
         let id;
         if (historyId) {
             id = setInterval(() => {
