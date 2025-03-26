@@ -56,7 +56,14 @@ const ModalPayment = ({ close, refresh }) => {
 
         http.get("/api/user/get-list").then((res) => {
             const data = [];
-            const accept = ["QRIS", "BCAVA", "BSI", "BRIVA", "MANDIRIVA"];
+            const accept = [
+                "QRIS",
+                "BCAVA",
+                "BSI",
+                "BRIVA",
+                "MANDIRIVA",
+                "BNIVA",
+            ];
             accept.forEach((item) => {
                 const acc = res.data.data.find((method) => method.nama == item);
                 data.push(acc);
