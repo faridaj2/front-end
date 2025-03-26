@@ -15,7 +15,7 @@ function Informasi() {
 
   const getUser = () => {
     http.get(`/api/user/get-user?id=${user.id}`).then((res) => {
-      setData(res.data);
+      setData(res.data.siswa);
     });
   };
   return (
