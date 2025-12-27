@@ -9,14 +9,15 @@ import Menu from "./Menu";
 function DashboardTemplate({ children }) {
     const { user, logout } = new AuthUser();
     const navigate = useNavigate();
+    console.log(user);
 
     useEffect(() => {
-        if (!user) logout();
+        if (!user) {
+            logout();
+            navigate("/");
+        }
     }, []);
 
-    useEffect(() => {
-        if (!user) navigate("/");
-    }, []);
     return (
         <div className="max-w-sm mx-auto min-h-screen scroll bg-dark">
             {children}

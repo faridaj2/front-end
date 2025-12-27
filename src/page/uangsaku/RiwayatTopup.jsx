@@ -180,8 +180,11 @@ const RiwayatTopup = () => {
                         <div className="text-center tracking-wider leading-loose">
                             Status Transaksi
                         </div>
-                        <div className="text-center text-2xl p-12 bg-brown rounded-2xl my-4">
-                            Rp. {addComa(data?.nominal)}
+                        <div className="flex py-3 justify-between border-b">
+                            <div className="text-white/80 font-light tracking-wider">
+                                Nomor Refrensi
+                            </div>
+                            <div>{data?.ref_kode}</div>
                         </div>
                         <div className="flex py-3 justify-between border-b">
                             <div className="text-white/80 font-light tracking-wider">
@@ -193,13 +196,21 @@ const RiwayatTopup = () => {
                             <div className="text-white/80 font-light tracking-wider">
                                 Status
                             </div>
-                            <div>{data?.status}</div>
+                            <div>
+                                {data?.status == "PAID" && "TELAH DIBAYAR"}
+                            </div>
                         </div>
-                        <div className="flex py-3 justify-between">
+                        <div className="flex py-3 justify-between border-b">
                             <div className="text-white/80 font-light tracking-wider">
                                 Waktu
                             </div>
                             <div>{data?.waktu_pembayaran}</div>
+                        </div>
+                        <div className="flex py-3 justify-between">
+                            <div className="text-white/80 font-light tracking-wider">
+                                Total
+                            </div>
+                            <div>Rp. {addComa(data?.nominal)}</div>
                         </div>
                     </div>
                     <div

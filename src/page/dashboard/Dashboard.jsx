@@ -23,7 +23,7 @@ function Dashboard() {
     const [dataUser, setDataUser] = useState();
 
     const getUser = () => {
-        http.get(`/api/user/get-user?id=${user.id}`).then((res) => {
+        http.get(`/api/user/get-user?id=${user?.id}`).then((res) => {
             setDataUser(res.data.siswa);
         });
     };
@@ -87,7 +87,7 @@ function Dashboard() {
 
             const data = {
                 target: "085156027913",
-                message: `Akun ${user.nama_siswa}, telah diakses di SantriConnect pada ${getDateNow()}`,
+                message: `Akun ${user?.nama_siswa}, telah diakses di SantriConnect pada ${getDateNow()}`,
             };
             const headers = {
                 Authorization: `${token}`,
@@ -123,7 +123,7 @@ function Dashboard() {
                 <div className="bg-brown p-3 text-white mx-5 rounded-3xl mb-5 flex  justify-between gap-4">
                     <div className="mt-2 flex flex-col gap-2 grow">
                         <h2 className="uppercase text-sm mb-1">
-                            {user.nama_siswa}
+                            {user?.nama_siswa}
                         </h2>
                         <h2 className="text-xs text-white pt-2 border-t border-white/20">
                             <span className="pr-4 p-1 rounded-full">
@@ -419,7 +419,7 @@ function Dashboard() {
                                             strokeWidth="2"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
-                                            class="lucide lucide-clipboard"
+                                            className="lucide lucide-clipboard"
                                         >
                                             <rect
                                                 width="8"
